@@ -1,0 +1,44 @@
+definitions:
+  data.Author:
+    properties:
+      books:
+        items:
+          $ref: '#/definitions/data.Book'
+        type: array
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  data.Book:
+    properties:
+      authors:
+        items:
+          $ref: '#/definitions/data.Author'
+        type: array
+      edition:
+        type: integer
+      id:
+        type: integer
+      name:
+        type: string
+      publicationYear:
+        type: integer
+    type: object
+info:
+  contact: {}
+paths:
+  /author:
+    get:
+      consumes:
+      - application/json
+      description: list all authors
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/data.Author'
+      summary: Author
+swagger: "2.0"

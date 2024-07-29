@@ -5,3 +5,6 @@ build:
 
 run:
 	./main
+
+swag:
+	@swag init -d ./cmd/api/ --pdl 2

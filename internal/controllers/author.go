@@ -4,12 +4,18 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/lauro-ss/work-at-olist/internal/data"
 )
 
-func ListAuthors() gin.HandlerFunc {
+// @Summary			Author
+//
+// @Description		list all authors
+// @Accept			json
+// @Produce			json
+// @Success			200	{object}	data.Author
+// @Router			/author [get]
+func (c *Controller) ListAuthors() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "pong",
-		})
+		c.JSON(http.StatusOK, []data.Author{})
 	}
 }
