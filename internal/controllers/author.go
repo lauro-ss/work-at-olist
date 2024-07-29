@@ -14,7 +14,7 @@ import (
 // @Produce			json
 // @Success			200	{object}	data.Author
 // @Router			/author [get]
-func (c *Controller) ListAuthors() gin.HandlerFunc {
+func ListAuthors() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.JSON(http.StatusOK, []data.Author{})
 	}

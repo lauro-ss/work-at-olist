@@ -11,8 +11,7 @@ import (
 func main() {
 	r := gin.Default()
 
-	c := new(controllers.Controller)
-	r.GET("/author", c.ListAuthors())
+	r.GET("/author", controllers.ListAuthors())
 
 	url := ginSwagger.URL("http://localhost:8080/swagger/doc.json")
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
