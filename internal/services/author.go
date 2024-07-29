@@ -6,7 +6,7 @@ type AuthorRepository struct {
 	*data.Database
 }
 
-func newAuthorRepository(db *data.Database) *AuthorRepository {
+func NewAuthorRepository(db *data.Database) *AuthorRepository {
 	return &AuthorRepository{
 		Database: db,
 	}

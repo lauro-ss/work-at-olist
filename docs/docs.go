@@ -29,7 +29,10 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/data.Author"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/data.Author"
+                            }
                         }
                     }
                 }

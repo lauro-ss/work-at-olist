@@ -1,9 +1,13 @@
 package main
 
 import (
+	"log"
+
 	"github.com/gin-gonic/gin"
 	_ "github.com/lauro-ss/work-at-olist/docs"
 	"github.com/lauro-ss/work-at-olist/internal/controllers"
+	"github.com/lauro-ss/work-at-olist/internal/data"
+	"github.com/lauro-ss/work-at-olist/internal/services"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
@@ -11,7 +15,13 @@ import (
 func main() {
 	r := gin.Default()
 
-	r.GET("/author", controllers.ListAuthors())
+	db, err := data.OpenAndMigrate("user=postgres password=postgres host=localhost port=5432 database=postgres")
+	if err != nil {
+		log.Fatal(err)
+	}
+	ar := services.NewAuthorRepository(db)
+
+	r.GET("/author", controllers.ListAuthors(ar))
 
 	url := ginSwagger.URL("http://localhost:8080/swagger/doc.json")
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))

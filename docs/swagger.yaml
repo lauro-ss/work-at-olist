@@ -39,6 +39,8 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/data.Author'
+            items:
+              $ref: '#/definitions/data.Author'
+            type: array
       summary: Author
 swagger: "2.0"

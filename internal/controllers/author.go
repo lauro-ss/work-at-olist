@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/lauro-ss/work-at-olist/internal/data"
+	"github.com/lauro-ss/work-at-olist/internal/services"
 )
 
 // @Summary			Author
@@ -12,9 +13,9 @@ import (
 // @Description		list all authors
 // @Accept			json
 // @Produce			json
-// @Success			200	{object}	data.Author
+// @Success			200	{object}	[]data.Author
 // @Router			/author [get]
-func ListAuthors() gin.HandlerFunc {
+func ListAuthors(ar *services.AuthorRepository) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.JSON(http.StatusOK, []data.Author{})
 	}
