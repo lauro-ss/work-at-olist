@@ -7,4 +7,4 @@ run:
 	./main
 
 swag:
-	@swag init -d ./cmd/api/ --pdl 2
+	@swag init -d ./cmd/api/ --pdl 3
