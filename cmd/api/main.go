@@ -20,8 +20,12 @@ func main() {
 		log.Fatal(err)
 	}
 	ar := services.NewAuthorRepository(db)
+	br := services.NewBookRepository(db)
 
 	r.GET("/author", controllers.ListAuthors(ar))
+
+	r.GET("/book", controllers.ListBooks(br))
+	r.GET("/book/:id", controllers.GetBook(br))
 
 	url := ginSwagger.URL("http://localhost:8080/swagger/doc.json")
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))

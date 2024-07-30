@@ -37,6 +37,59 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/book": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Book",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/data.Book"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/book/{id}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Book",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Book ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/data.Book"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -60,12 +113,6 @@ const docTemplate = `{
         "data.Book": {
             "type": "object",
             "properties": {
-                "authors": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/data.Author"
-                    }
-                },
                 "edition": {
                     "type": "integer"
                 },
@@ -75,7 +122,7 @@ const docTemplate = `{
                 "name": {
                     "type": "string"
                 },
-                "publicationYear": {
+                "publication_year": {
                     "type": "integer"
                 }
             }

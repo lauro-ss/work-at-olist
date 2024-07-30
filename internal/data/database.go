@@ -12,11 +12,11 @@ type Author struct {
 }
 
 type Book struct {
-	Id              uint
-	Name            string `goe:"type:varchar(50)"`
-	Edition         uint8
-	PublicationYear uint16
-	Authors         []Author `goe:"table:BookAuthor"`
+	Id              uint     `json:"id"`
+	Name            string   `json:"name" goe:"type:varchar(50)"`
+	Edition         uint8    `json:"edition"`
+	PublicationYear uint16   `json:"publication_year"`
+	Authors         []Author `json:"-" goe:"table:BookAuthor"`
 }
 
 type Database struct {
