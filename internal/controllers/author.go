@@ -4,7 +4,6 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/lauro-ss/work-at-olist/internal/data"
 	"github.com/lauro-ss/work-at-olist/internal/services"
 )
 
@@ -17,6 +16,6 @@ import (
 // @Router			/author [get]
 func ListAuthors(ar *services.AuthorRepository) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		c.JSON(http.StatusOK, []data.Author{})
+		c.JSON(http.StatusOK, ar.List())
 	}
 }

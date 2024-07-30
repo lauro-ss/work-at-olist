@@ -6,9 +6,9 @@ import (
 )
 
 type Author struct {
-	Id    uint
-	Name  string `goe:"type:varchar(50)"`
-	Books []Book `goe:"table:BookAuthor"`
+	Id    uint   `json:"id"`
+	Name  string `json:"name" goe:"type:varchar(50)"`
+	Books []Book `json:"books" goe:"table:BookAuthor"`
 }
 
 type Book struct {
