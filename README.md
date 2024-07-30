@@ -133,3 +133,5 @@ To create a book you need to send this payload (in json format) below:
 * Be careful with REST API details. They can bite you!
 
 **Have fun!**
+
+go run ./cmd/import_csv/main.go authors.csv
