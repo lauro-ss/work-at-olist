@@ -1,6 +1,10 @@
 package services
 
-import "github.com/lauro-ss/work-at-olist/internal/data"
+import (
+	"fmt"
+
+	"github.com/lauro-ss/work-at-olist/internal/data"
+)
 
 type BookRepository struct {
 	db *data.Database
@@ -33,7 +37,7 @@ func (br *BookRepository) Get(id uint) *data.Book {
 
 func (br *BookRepository) Create(book data.Book) data.Book {
 	br.db.Insert(br.db.Book).Value(&book)
-
+	fmt.Println(book)
 	if len(book.Authors) > 0 {
 		bookAuthor := make([]uint, len(book.Authors)*2)
 		c := 0
@@ -65,12 +69,16 @@ func (br *BookRepository) Update(id uint, book data.Book) data.Book {
 	return book
 }
 
-func (br *BookRepository) Delete(id uint, book data.Book) data.Book {
+func (br *BookRepository) Delete(id uint) bool {
 	db := br.db
 
-	db.DeleteIn(db.Book, db.Author).Where(db.Equals(&db.Book.Id, id))
+	_, err := db.DeleteIn(db.Book, db.Author).Where(db.Equals(&db.Book.Id, id))
+	if err != nil {
+		fmt.Println(err)
+		return false
+	}
 
-	db.Delete(db.Book).
+	_, err = db.Delete(db.Book).
 		Where(db.Equals(&db.Book.Id, id))
-	return book
+	return err == nil
 }

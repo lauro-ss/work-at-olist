@@ -26,6 +26,9 @@ func main() {
 
 	r.GET("/book", controllers.ListBooks(br))
 	r.GET("/book/:id", controllers.GetBook(br))
+	r.POST("/book", controllers.CreateBook(br))
+	r.PUT("/book", controllers.UpdateBook(br))
+	r.DELETE("/book/:id", controllers.DeleteBook(br))
 
 	url := ginSwagger.URL("http://localhost:8080/swagger/doc.json")
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))

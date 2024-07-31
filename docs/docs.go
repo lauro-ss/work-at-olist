@@ -58,6 +58,37 @@ const docTemplate = `{
                         }
                     }
                 }
+            },
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Book",
+                "parameters": [
+                    {
+                        "description": "Book JSON",
+                        "name": "book",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/data.Book"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/data.Book"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
             }
         },
         "/book/{id}": {
@@ -89,6 +120,69 @@ const docTemplate = `{
                         "description": "Not Found"
                     }
                 }
+            },
+            "put": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Book",
+                "parameters": [
+                    {
+                        "description": "Book JSON",
+                        "name": "book",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/data.Book"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/data.Book"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            },
+            "delete": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Delete Book",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Book ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
             }
         }
     },
@@ -96,12 +190,6 @@ const docTemplate = `{
         "data.Author": {
             "type": "object",
             "properties": {
-                "books": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/data.Book"
-                    }
-                },
                 "id": {
                     "type": "integer"
                 },
@@ -113,6 +201,12 @@ const docTemplate = `{
         "data.Book": {
             "type": "object",
             "properties": {
+                "authors": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/data.Author"
+                    }
+                },
                 "edition": {
                     "type": "integer"
                 },

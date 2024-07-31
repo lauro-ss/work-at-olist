@@ -8,7 +8,7 @@ import (
 type Author struct {
 	Id    uint   `json:"id"`
 	Name  string `json:"name" goe:"type:varchar(50)"`
-	Books []Book `json:"books" goe:"table:BookAuthor"`
+	Books []Book `json:"-" goe:"table:BookAuthor"`
 }
 
 type Book struct {
@@ -16,7 +16,7 @@ type Book struct {
 	Name            string   `json:"name" goe:"type:varchar(50)"`
 	Edition         uint8    `json:"edition"`
 	PublicationYear uint16   `json:"publication_year"`
-	Authors         []Author `json:"-" goe:"table:BookAuthor"`
+	Authors         []Author `json:"authors" goe:"table:BookAuthor"`
 }
 
 type Database struct {
