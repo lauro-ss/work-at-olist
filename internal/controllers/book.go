@@ -17,7 +17,8 @@ import (
 // @Router			/book [get]
 func ListBooks(br *services.BookRepository) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		c.JSON(http.StatusOK, br.List())
+		books, _ := br.List()
+		c.JSON(http.StatusOK, books)
 	}
 }
 

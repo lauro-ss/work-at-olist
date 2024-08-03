@@ -16,9 +16,9 @@ func NewBookRepository(db *data.Database) *BookRepository {
 	}
 }
 
-func (br *BookRepository) List() (books []data.Book) {
-	br.db.Select(br.db.Book).Scan(&books)
-	return books
+func (br *BookRepository) List() (books []data.Book, err error) {
+	_, err = br.db.Select(br.db.Book).Scan(&books)
+	return books, err
 }
 
 func (br *BookRepository) Get(id uint) *data.Book {
