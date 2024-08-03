@@ -1,0 +1,31 @@
+name: tests
+
+on:
+    push:
+      branches: [ "master" ]
+    pull_request:
+      branches: [ "master" ]
+
+jobs:
+    postgres:
+      strategy:
+        matrix:
+          dbversion: ['postgres:14']
+          go: ['1.22']
+          platform: [ubuntu-latest]
+      runs-on: ubuntu-latest
+
+      services:
+        postgres:
+          image: postgres:16.3-alpine
+          env:
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_USER: postgres
+            POSTGRES_DB: postgres
+          ports:
+            - 5432:5432
+          options: >-
+            --health-cmd pg_isready
+            --health-interval 10s
+            --health-timeout 5s
+            --health-retries 5
