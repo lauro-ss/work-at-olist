@@ -2,8 +2,10 @@ package main
 
 import (
 	"log"
+	"os"
 
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 	_ "github.com/lauro-ss/work-at-olist/docs"
 	"github.com/lauro-ss/work-at-olist/internal/controllers"
 	"github.com/lauro-ss/work-at-olist/internal/data"
@@ -11,15 +13,23 @@ import (
 )
 
 func main() {
-	r := gin.Default()
+	err := godotenv.Load()
+	if err != nil {
+		log.Panic(err)
+	}
 
-	db, err := data.OpenAndMigrate("user=postgres password=postgres host=localhost port=5432 database=postgres")
+	dns := os.Getenv("DATABASE_DNS")
+	if dns == "" {
+		dns = "user=postgres password=postgres host=localhost port=5432 database=postgres"
+	}
+	db, err := data.OpenAndMigrate(dns)
 	if err != nil {
 		log.Fatal(err)
 	}
 	ar := services.NewAuthorRepository(db)
 	br := services.NewBookRepository(db)
 
+	r := gin.Default()
 	r.GET("/author", controllers.ListAuthors(ar))
 
 	r.GET("/book", controllers.ListBooks(br))
@@ -31,5 +41,5 @@ func main() {
 	// url := ginSwagger.URL("http://localhost:8080/swagger/doc.json")
 	// r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
 
-	r.Run(":80") // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
+	r.Run(os.Getenv("SERVER_HOST") + os.Getenv("SERVER_PORT")) // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }
