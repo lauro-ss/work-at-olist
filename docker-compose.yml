@@ -6,7 +6,7 @@ services:
       DATABASE_DNS: "user=${POSTGRES_USER} password=${POSTGRES_PASSWORD} host=go_db port=5432 database=${POSTGRES_DB} sslmode=disable"
       SERVER_PORT: ${SERVER_PORT}
     ports:
-      - "8080:8080"
+      - "${SERVER_PORT}:${SERVER_PORT}"
     depends_on:
       - go_db
   go_db:
@@ -17,7 +17,7 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_DB: ${POSTGRES_DB}
     ports:
-      - "9898:5432"
+      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data/
 
