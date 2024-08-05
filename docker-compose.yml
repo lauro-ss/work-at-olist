@@ -1,0 +1,22 @@
+services:
+  go-app:
+    container_name: go-app
+    build: .
+    ports:
+      - "80:80"
+    depends_on:
+      - go_db
+  go_db:
+    container_name: go_db
+    image: postgres:16.3-alpine
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+volumes:
+  postgres_data: {}

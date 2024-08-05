@@ -8,8 +8,6 @@ import (
 	"github.com/lauro-ss/work-at-olist/internal/controllers"
 	"github.com/lauro-ss/work-at-olist/internal/data"
 	"github.com/lauro-ss/work-at-olist/internal/services"
-	swaggerFiles "github.com/swaggo/files"
-	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func main() {
@@ -30,8 +28,8 @@ func main() {
 	r.PUT("/book", controllers.UpdateBook(br))
 	r.DELETE("/book/:id", controllers.DeleteBook(br))
 
-	url := ginSwagger.URL("http://localhost:8080/swagger/doc.json")
-	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
+	// url := ginSwagger.URL("http://localhost:8080/swagger/doc.json")
+	// r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
 
-	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
+	r.Run(":80") // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }
