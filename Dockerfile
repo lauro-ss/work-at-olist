@@ -18,5 +18,6 @@ FROM alpine
 
 # copy all the content from /app/myapp into root of alpine
 COPY --from=build /app/myapp /
+COPY .env /
 
 ENTRYPOINT [ "/myapp" ]

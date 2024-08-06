@@ -41,5 +41,5 @@ func main() {
 	// url := ginSwagger.URL("http://localhost:8080/swagger/doc.json")
 	// r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
 
-	r.Run(os.Getenv("SERVER_HOST") + os.Getenv("SERVER_PORT")) // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
+	r.Run(os.Getenv("SERVER_HOST") + ":" + os.Getenv("SERVER_PORT")) // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }
