@@ -134,4 +134,95 @@ To create a book you need to send this payload (in json format) below:
 
 **Have fun!**
 
+## Content
+- [Database](#database)
+- [Project Structure](#project-structure)
+- [Installing](#installing)
+- [Using Docker](#using-docker)
+- [Importing CSV Authors](#importing-csv-authors)
+- [Test](#test)
+- [API Documentation](#api-documentation)
+
+## Database
+
+```mermaid
+classDiagram
+
+    Author "*" --> "*" BookAuthor
+    Book "*" --> "*" BookAuthor
+
+    class Author {
+        - id: ~uint~
+        - name: ~string~
+    }
+
+    class BookAuthor {
+        - id_author: ~uint~
+        - id_book: ~uint
+    }
+
+    class Book {
+        - id: ~uint~
+        - name: ~string~
+        - edition: ~int~
+        - publication year: ~int~
+    }
+```
+
+## Project Structure
+
+```
+├── 📂 cmd
+|   ├── 📂 api
+|   |   ├── main.go
+|   ├── 📂 import_csv
+|   |   ├── main.go
+├── 📂 internal
+|   ├── 📂 controllers
+|   |   ├── author.go
+|   |   ├── book.go
+|   ├── 📂 data
+|   |   ├── database.go
+|   ├── 📂 service
+|   |   ├── author.go
+|   |   ├── book_test.go
+|   |   ├── book.go
+├── .env.example
+├── authors.csv
+├── docker-compose.yml
+├── Dockerfile
+├── go.mod
+├── go.sum
+├── Makefile
+```
+
+## Installing
+- Go 1.22
+- PostgreSQL
+- Make CLI (Optional)
+
+### Running the project
+Using Go CLI
+```
+go run ./cmd/api/main.go
+```
+Using Makefile
+```
+Make
+```
+## Using Docker
+```
+docker compose up -d --build
+```
+
+## Importing CSV Authors
+```
 go run ./cmd/import_csv/main.go authors.csv
+```
+
+## Test
+```
+go test ./...
+```
+
+## API Documentation
