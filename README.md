@@ -179,11 +179,13 @@ classDiagram
 |   |   ├── main.go
 ├── 📂 internal
 |   ├── 📂 controllers
+|   |   ├── author_test.go
 |   |   ├── author.go
 |   |   ├── book.go
 |   ├── 📂 data
 |   |   ├── database.go
 |   ├── 📂 service
+|   |   ├── author_test.go
 |   |   ├── author.go
 |   |   ├── book_test.go
 |   |   ├── book.go
