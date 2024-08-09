@@ -16,3 +16,8 @@ run_csv:
 
 swag:
 	@swag init -d ./cmd/api/ --pdl 3
+
+test:
+	@docker compose -f docker-compose.test.yml up -d
+	@go test ./...
+	@docker compose -f docker-compose.test.yml down 

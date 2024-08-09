@@ -8,7 +8,7 @@ import (
 )
 
 func Setup() (*services.BookRepository, error) {
-	db, err := data.OpenAndMigrate("user=postgres password=postgres host=localhost port=5432 database=postgres")
+	db, err := data.OpenAndMigrate("user=postgres password=postgres host=localhost port=9432 database=postgres")
 	if err != nil {
 		return nil, err
 	}
