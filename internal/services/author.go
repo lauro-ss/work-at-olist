@@ -3,21 +3,21 @@ package services
 import "github.com/lauro-ss/work-at-olist/internal/data"
 
 type AuthorRepository struct {
-	db *data.Database
+	Db *data.Database
 }
 
-func NewAuthorRepository(db *data.Database) *AuthorRepository {
+func NewAuthorRepository(Db *data.Database) *AuthorRepository {
 	return &AuthorRepository{
-		db: db,
+		Db: Db,
 	}
 }
 
 func (ar *AuthorRepository) List() (authors []data.Author) {
-	ar.db.Select(ar.db.Author).Scan(&authors)
+	ar.Db.Select(ar.Db.Author).Scan(&authors)
 	return authors
 }
 
 func (ar *AuthorRepository) CreateBatch(author []data.Author) ([]data.Author, error) {
-	_, err := ar.db.Insert(ar.db.Author).Value(&author)
+	_, err := ar.Db.Insert(ar.Db.Author).Value(&author)
 	return author, err
 }

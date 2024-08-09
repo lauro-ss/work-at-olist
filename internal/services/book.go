@@ -7,26 +7,26 @@ import (
 )
 
 type BookRepository struct {
-	db *data.Database
+	Db *data.Database
 }
 
-func NewBookRepository(db *data.Database) *BookRepository {
+func NewBookRepository(Db *data.Database) *BookRepository {
 	return &BookRepository{
-		db: db,
+		Db: Db,
 	}
 }
 
 func (br *BookRepository) List() (books []data.Book, err error) {
-	_, err = br.db.Select(br.db.Book).Scan(&books)
+	_, err = br.Db.Select(br.Db.Book).Scan(&books)
 	return books, err
 }
 
 func (br *BookRepository) Get(id uint) *data.Book {
-	db := br.db
+	Db := br.Db
 
 	var book data.Book
-	db.Select(db.Book).
-		Where(db.Equals(&db.Book.Id, id)).
+	Db.Select(Db.Book).
+		Where(Db.Equals(&Db.Book.Id, id)).
 		Scan(&book)
 
 	if book.Id != 0 {
@@ -35,9 +35,11 @@ func (br *BookRepository) Get(id uint) *data.Book {
 	return nil
 }
 
-func (br *BookRepository) Create(book data.Book) data.Book {
-	br.db.Insert(br.db.Book).Value(&book)
-	fmt.Println(book)
+func (br *BookRepository) Create(book data.Book) (*data.Book, error) {
+	_, err := br.Db.Insert(br.Db.Book).Value(&book)
+	if err != nil {
+		return nil, err
+	}
 	if len(book.Authors) > 0 {
 		bookAuthor := make([]uint, len(book.Authors)*2)
 		c := 0
@@ -45,15 +47,18 @@ func (br *BookRepository) Create(book data.Book) data.Book {
 			bookAuthor[i+c], bookAuthor[i+c+1] = book.Id, book.Authors[i].Id
 			c++
 		}
-		br.db.InsertIn(br.db.Book, br.db.Author).Values(bookAuthor)
+		_, err = br.Db.InsertIn(br.Db.Book, br.Db.Author).Values(bookAuthor)
+		if err != nil {
+			return nil, err
+		}
 	}
-	return book
+	return &book, nil
 }
 
 func (br *BookRepository) Update(id uint, book data.Book) data.Book {
-	db := br.db
-	db.Update(db.Book).
-		Where(db.Equals(&db.Book.Id, id)).
+	Db := br.Db
+	Db.Update(Db.Book).
+		Where(Db.Equals(&Db.Book.Id, id)).
 		Value(&book)
 
 	if len(book.Authors) > 0 {
@@ -63,22 +68,22 @@ func (br *BookRepository) Update(id uint, book data.Book) data.Book {
 			bookAuthor[i+c], bookAuthor[i+c+1] = book.Id, book.Authors[i].Id
 			c++
 		}
-		db.DeleteIn(db.Book, db.Author).Where(db.Equals(&db.Book.Id, id))
-		db.InsertIn(db.Book, db.Author).Values(bookAuthor)
+		Db.DeleteIn(Db.Book, Db.Author).Where(Db.Equals(&Db.Book.Id, id))
+		Db.InsertIn(Db.Book, Db.Author).Values(bookAuthor)
 	}
 	return book
 }
 
 func (br *BookRepository) Delete(id uint) bool {
-	db := br.db
+	Db := br.Db
 
-	_, err := db.DeleteIn(db.Book, db.Author).Where(db.Equals(&db.Book.Id, id))
+	_, err := Db.DeleteIn(Db.Book, Db.Author).Where(Db.Equals(&Db.Book.Id, id))
 	if err != nil {
 		fmt.Println(err)
 		return false
 	}
 
-	_, err = db.Delete(db.Book).
-		Where(db.Equals(&db.Book.Id, id))
+	_, err = Db.Delete(Db.Book).
+		Where(Db.Equals(&Db.Book.Id, id))
 	return err == nil
 }

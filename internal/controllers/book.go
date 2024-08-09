@@ -70,7 +70,8 @@ func CreateBook(br *services.BookRepository) gin.HandlerFunc {
 				"status_code": "400",
 			})
 		}
-		c.JSON(http.StatusOK, br.Create(b))
+		book, _ := br.Create(b)
+		c.JSON(http.StatusOK, book)
 	}
 }
 
