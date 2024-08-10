@@ -16,6 +16,10 @@ import (
 // @Router			/author [get]
 func ListAuthors(ar *services.AuthorRepository) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		c.JSON(http.StatusOK, ar.List())
+		if ar != nil {
+			c.JSON(http.StatusOK, ar.List())
+		} else {
+			c.JSON(http.StatusOK, nil)
+		}
 	}
 }

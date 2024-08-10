@@ -6,5 +6,6 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
       POSTGRES_DB: postgres
+      POSTGRES_PORT: 9432
     ports:
       - "9432:5432"

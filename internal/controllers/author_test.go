@@ -8,18 +8,12 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/lauro-ss/work-at-olist/internal/controllers"
 	"github.com/lauro-ss/work-at-olist/internal/data"
-	"github.com/lauro-ss/work-at-olist/internal/services"
 )
 
 func Setup() (*gin.Engine, error) {
-	db, err := data.OpenAndMigrate("user=postgres password=postgres host=localhost port=5432 database=postgres")
-	if err != nil {
-		return nil, err
-	}
-	ar := services.NewAuthorRepository(db)
-
 	r := gin.Default()
-	r.GET("/author", controllers.ListAuthors(ar))
+	//TODO: mock here
+	r.GET("/author", controllers.ListAuthors(nil))
 
 	return r, nil
 }
